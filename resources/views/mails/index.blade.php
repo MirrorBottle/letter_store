@@ -26,14 +26,15 @@
                             </div>
                         @endif
                     </div>
-                    <div class="table-responsive">
+                    <div class="table-responsive container">
                         <table class="table align-items-center table-flush">
                             <thead class="thead-light">
                                 <tr>
-                                    <th scope="col">{{ __('ID') }}</th>
+                                    <th scope="col">{{ __('No.') }}</th>
                                     <th scope="col">{{ __('Reference Number') }}</th>
                                     <th scope="col">{{ __('Subject') }}</th>
-                                    <th scope="col">{{ __('File') }}</th>
+                                    <th scope="col">{{ __('Docx File') }}</th>
+                                    <th scope="col">{{ __('PDF File') }}</th>
                                     <th scope="col">{{ __('Creation Date') }}</th>
                                     <th scope="col">{{ __('Update Date') }}</th>
                                     <th scope="col"></th>
@@ -42,10 +43,11 @@
                             <tbody>
                                 @foreach ($mails as $m)
                                     <tr>
-                                        <td>{{ $m->id }}</td>
+                                        <td>{{ $loop->iteration }}</td>
                                         <td>{{ $m->no_surat}}</td>
                                         <td>{{ $m->perihal}}</td>
-                                        <td>{{ $m->file}}</td>
+                                        <td>{{ $m->doc}}</td>
+                                        <td>{{ $m->pdf}}</td>
                                         <td>{{ date("F d, Y", strtotime($m->created_at)) }}</td>
                                         <td>{{ date("F d, Y", strtotime($m->updated_at)) }}</td>
                                         <td class="text-right">
@@ -54,19 +56,23 @@
                                                     <i class="fas fa-ellipsis-v"></i>
                                                 </a>
                                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                        @if ($m->id != auth()->id())
-                                                            <form action="{{ route('mail.destroy', $m->id) }}" method="post">
-                                                                @csrf
-                                                                @method('delete')
-
-                                                                <a class="dropdown-item" href="{{ route('mail.edit', $m->id) }}">{{ __('Edit') }}</a>
-                                                                <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this mail?") }}') ? this.parentElement.submit() : ''">
-                                                                    {{ __('Delete') }}
-                                                                </button>
-                                                            </form>
-                                                        @else
-                                                            <a class="dropdown-item" href="{{ route('profile.edit') }}">{{ __('Edit') }}</a>
-                                                        @endif
+                                                        <form action="{{ route('mail.destroy', $m->id) }}" method="post">
+                                                            @csrf
+                                                            @method('delete')
+                                                            <button type="button" class="dropdown-item" {{$m->user_id != auth()->id() ? 'disabled' : ''}} onclick="confirm('{{ __("Are you sure you want to delete this mail?") }}') ? this.parentElement.submit() : ''">
+                                                                <i class="ni ni-fat-delete text-danger"></i>
+                                                                {{ __('Delete') }}
+                                                            </button>
+                                                        </form>
+                                                        <a class="dropdown-item" href="{{ route('profile.edit') }}">
+                                                            <i class="ni ni-books text-warning"></i>
+                                                            {{ __('Edit') }}
+                                                        </a>
+                                                        <button type="button" class="dropdown-item" data-toggle="modal" data-target="#downloadModal" {{$m->user_id != auth()->id() ? 'disabled' : ''}}>
+                                                            <i class="ni ni-cloud-download-95 text-success"></i>
+                                                            {{ __('Download') }}
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </td>
@@ -79,4 +85,5 @@
             </div>
         </div>
     </div>
+    @include('mails.modal')
 @endsection

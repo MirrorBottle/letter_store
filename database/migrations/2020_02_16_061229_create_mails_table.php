@@ -16,9 +16,16 @@ class CreateMailsTable extends Migration
         Schema::create('mails', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('no_surat')->unique();
+            $table->unsignedBigInteger('user_id');
             $table->string('perihal');
-            $table->text('file');
+            $table->text('doc');
+            $table->text('html');
+            $table->text('pdf');
             $table->timestamps();
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
         });
     }
 
@@ -29,6 +36,6 @@ class CreateMailsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mail');
+        Schema::dropIfExists('mails');
     }
 }

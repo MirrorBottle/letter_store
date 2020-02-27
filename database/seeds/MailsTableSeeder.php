@@ -12,11 +12,25 @@ class MailsTableSeeder extends Seeder
     public function run()
     {
         DB::table('mails')->insert([
-            'no_surat' => '3212309123001',
-            'perihal' => 'Testing',
-            'file' => 'file.pdf',
-            'created_at' => now(),
-            'updated_at' => now()
+            [
+                'no_surat' => '3212309123001',
+                'user_id' => 1,
+                'perihal' => 'Testing',
+                'doc' => 'file.docx',
+                'html' => 'file.html',
+                'pdf' => 'file.pdf',
+                'created_at' => now(),
+                'updated_at' => now()
+            ], [
+                'no_surat' => '213123124121',
+                'user_id' => 1,
+                'perihal' => 'Testing 2',
+                'doc' => 'file2.docx',
+                'html' => 'file2.html',
+                'pdf' => 'file2.pdf',
+                'created_at' => now(),
+                'updated_at' => now()
+            ]
         ]);
     }
 }
