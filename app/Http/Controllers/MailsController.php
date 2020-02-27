@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Mail;
 
 class MailsController extends Controller
@@ -15,8 +16,10 @@ class MailsController extends Controller
     public function index()
     {
         $mails = Mail::all();
-        dd($mails);
-        return view('mails.index');
+        $mails = DB::table('mails')->get();
+        // dd
+        ($mails);
+        return view('mails.index', ['mails' => $mails]);
     }
 
     /**
@@ -27,6 +30,7 @@ class MailsController extends Controller
     public function create()
     {
         //
+        return view('mails.create');
     }
 
     /**
@@ -38,6 +42,12 @@ class MailsController extends Controller
     public function store(Request $request)
     {
         //
+        DB::table('mails')->insert([
+            'no_surat' => $request->renumber,
+            'perihal' => $request->subject,
+            'file' => $request->file
+        ]);
+        return redirect()->route('mail.index')->withStatus(__('Mail successfully created.'));
     }
 
     /**
@@ -57,9 +67,10 @@ class MailsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Mail $mails)
     {
-        //
+        $mails = DB::table("mails")->where('ID', $mails)->get();
+        return view ('mails.edit', compact('mails'));
     }
 
     /**
@@ -69,9 +80,14 @@ class MailsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $mails)
     {
-        //
+        DB::table('mails')->where('id', $request->id->update([
+            'no_surat' => $request->renumber,
+            'perihal' => $request->subject,
+            'file' => $request->file
+        ]));
+        return redirect('/mail');
     }
 
     /**
@@ -82,6 +98,7 @@ class MailsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DB::table('mails')->where('id',$id)->delete();
+        return redirect()->route('mail.index')->withStatus(__('Mail successfully deleted.'));
     }
 }
