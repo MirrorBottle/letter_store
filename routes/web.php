@@ -14,8 +14,9 @@
 Auth::routes();
 
 Route::redirect('/home', '/');
-Route::get('/', 'HomeController@index')->name('home');
+Route::redirect('/', '/login');
 Route::group(['middleware' => 'auth'], function () {
+    Route::get('/', 'HomeController@index')->name('home');
     Route::resource('mail', 'MailsController');
     Route::resource('user', 'UserController', ['except' => ['show']]);
     Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);

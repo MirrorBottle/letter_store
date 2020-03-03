@@ -1,9 +1,12 @@
 @extends('layouts.app', ['class' => 'bg-white'])
 
 @section('content')
-    @include('layouts.headers.guest')
-    <div class="container pb-5" style="margin-top:-30vh;">
+    @include('layouts.headers.guest', ['message' => 'Welcome.'])
+    <div class="container pb-5" style="margin-top:-20vh;">
         <div class="row">
+            <div class="col-lg-7 col-md-5">
+                <img class="img-fluid" src="{{asset('argon/img/login_image.png')}}" alt="">
+            </div>
             <div class="col-lg-5 col-md-7">
                 <div class="card bg-primary shadow-lg border-0">
                     <div class="card-body px-lg-5 py-lg-5">
@@ -52,9 +55,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-7 col-md-5">
-                <img class="img-fluid" src="{{asset('argon/img/login_image.png')}}" alt="">
-            </div>
+            
         </div>
     </div>
 @endsection

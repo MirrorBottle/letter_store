@@ -17,6 +17,8 @@
         <link href="{{ asset('argon') }}/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
         <!-- Argon CSS -->
         <link type="text/css" href="{{ asset('argon') }}/css/argon.css?v=1.0.0" rel="stylesheet">
+        {{-- Data Tables --}}
+        <link rel="stylesheet" href="{{asset('datatables/dataTables.bootstrap4.min.css')}}">
         @stack('css')
     </head>
     <body class="{{ $class ?? '' }}">
@@ -38,10 +40,23 @@
 
         <script src="{{ asset('argon') }}/vendor/jquery/dist/jquery.min.js"></script>
         <script src="{{ asset('argon') }}/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        
+        <script src="{{ asset('argon') }}/js/argon.js?v=1.0.0"></script>
+        <script src="{{asset('datatables/jquery.dataTables.min.js')}}"></script>
+        <script src="{{asset('datatables/dataTables.bootstrap4.min.js')}}"></script>
+        <script>
+            $(document).ready(function() {
+                $('.datatable').DataTable({
+                    'pagingType' : 'numbers',
+                    lengthMenu: [[5,10,15,20,25, 50, 75, 100, -1], [5,10,15,20,25, 50, 75, 100, "All"]],
+                    language: {
+                        url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Indonesian.json"
+                    },
+                });
+            });
+        </script>
         @stack('js')
         
         <!-- Argon JS -->
-        <script src="{{ asset('argon') }}/js/argon.js?v=1.0.0"></script>
+        
     </body>
 </html>

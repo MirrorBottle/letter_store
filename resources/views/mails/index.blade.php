@@ -26,8 +26,8 @@
                             </div>
                         @endif
                     </div>
-                    <div class="table-responsive container">
-                        <table class="table align-items-center table-flush">
+                    <div class="table-responsive container py-4">
+                        <table class="table align-items-center table-flush datatable">
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col">{{ __('No.') }}</th>
