@@ -4,6 +4,7 @@
     @include('users.partials.header', ['title' => __('Add Mail')])
 
     <div class="container-fluid mt--7">
+        @include('layouts.alert')
         <div class="row">
             <div class="col-xl-12 order-xl-1">
                 <div class="card bg-secondary shadow">
@@ -18,7 +19,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <form method="post" action="{{ route('mail.store') }}" autocomplete="off">
+                        <form method="post" enctype="multipart/form-data" action="{{ route('mail.store') }}" autocomplete="off">
                             @csrf
 
                             <h6 class="heading-small text-muted mb-4">{{ __('Mail information') }}</h6>
@@ -55,7 +56,7 @@
                                             <input type="file" name="docx" class="form-control bg-primary text-white file-input" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
                                         </div>
                                         @if ($errors->has('docx'))
-                                            <span class="invalid-feedback" role="alert">
+                                            <span class="invalid-feedback d-block" role="alert">
                                                 <strong>{{ $errors->first('docx') }}</strong>
                                             </span>
                                         @endif
@@ -71,7 +72,7 @@
                                             <input type="file" name="pdf" class="form-control bg-danger text-white file-input" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
                                         </div>
                                         @if ($errors->has('pdf'))
-                                            <span class="invalid-feedback" role="alert">
+                                            <span class="invalid-feedback d-block" role="alert">
                                                 <strong>{{ $errors->first('pdf') }}</strong>
                                             </span>
                                         @endif
@@ -125,8 +126,10 @@
 @endpush
 @push('js')
     <script>
-        function disabled() {
-            console.log($(this));
-        }
+        $(function() {
+            $('.file-input').on('change', function(e) {
+                $(this).attr('name') == 'docx' ? $(".file-input[name='pdf']").prop('disabled', 'true') : $(".file-input[name='docx']").prop('disabled', 'true') 
+            })
+        })
     </script>
 @endpush

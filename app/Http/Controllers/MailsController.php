@@ -38,18 +38,20 @@ class MailsController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        DB::table('mails')->insert([
-            'no_surat' => $request->renumber,
-            'perihal' => $request->subject,
-            'doc' => $request->docx,
-            'pdf' => $request->pdf,
-            'user_id' => auth()->user()->id,
-            'html' => $request->html
+        // 
+        $request->validate([
+            'pdf' => 'mimes:pdf',
+            'docx' => 'mimes:doc,docx,zip'
         ]);
-
-
-        return redirect()->route('mail.index')->withStatus(__('Mail successfully created.'));
+        if ($request->hasFile('pdf') || $request->hasFile('docx')) {
+            if ($request->file('pdf')) {
+                dd('ini pdf');
+            } else {
+                dd('ini docx');
+            }
+        } else {
+            return redirect()->route('mail.index')->with('error', 'Surat tidak berhasil ditambahkan!');
+        }
     }
 
     /**
