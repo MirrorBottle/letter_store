@@ -104,6 +104,11 @@
                     </div>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ url('log') }}">
+                        <i class="fas fa-file"></i> {{ __('Logs') }}
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('home') }}">
                         <i class="fas fa-user-circle text-primary"></i> {{ __('Profile') }}
                     </a>

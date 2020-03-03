@@ -4,7 +4,7 @@
             <!-- Card stats -->
             <div class="row">
                 <div class="col-12 d-flex justify-content-center align-items-center">
-                    <h1 class="text-white display-1 ">Surat</h1>
+                <h1 class="text-white display-1 ">{{$message}}</h1>
                 </div>
             </div>
         </div>

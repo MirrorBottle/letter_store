@@ -28,4 +28,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('mails', ['as' => 'mails.update', 'uses' => 'MailsController@update']);
     Route::post('/mails/store', 'MailsController@store');
     Route::post('/mails/update', 'MailsController@update');
+    Route::resource('log', 'LogsController');
 });
