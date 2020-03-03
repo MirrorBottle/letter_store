@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Log;
+use App\Mail;
+
 class HomeController extends Controller
 {
     /**
@@ -21,6 +24,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('dashboard');
+        $mails = count(Mail::all());
+        $deleted = count(Log::where('activity', 'hapus')->get());
+        $added = count(Log::where('activity', 'tambah')->get());
+        $printed = count(Log::where('activity', 'cetak')->get());
+        $logs = Log::latest()->take(4)->get();
+        return view('dashboard', compact('mails', 'deleted', 'added', 'printed', 'logs'));
     }
 }

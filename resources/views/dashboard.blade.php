@@ -19,22 +19,22 @@
                                 <div class="row">
                                     <div class="col-lg-3 col-12 d-flex flex-column justify-content-center align-items-center">
                                         <h2><i class="fas fa-mail-bulk fa-5x text-primary"></i></h2>
-                                        <h2 class="font-weight-bold display-3 text-primary mb-0">1080</h2>
+                                    <h2 class="font-weight-bold display-3 text-primary mb-0">{{$mails}}</h2>
                                         <h3 class="mt-0 text-uppercase text-muted">Tersedia</h3>
                                     </div>
                                     <div class="col-lg-3 col-12 d-flex flex-column justify-content-center align-items-center">
                                         <h2><i class="fas fa-eraser fa-5x text-danger"></i></h2>
-                                        <h2 class="font-weight-bold display-3 text-danger mb-0">10</h2>
+                                    <h2 class="font-weight-bold display-3 text-danger mb-0">{{$deleted}}</h2>
                                         <h3 class="mt-0 text-uppercase text-muted">Dihapus</h3>
                                     </div>
                                     <div class="col-lg-3 col-12 d-flex flex-column justify-content-center align-items-center">
                                         <h2><i class="fas fa-folder-plus fa-5x text-success"></i></h2>
-                                        <h2 class="font-weight-bold display-3 text-success mb-0">10</h2>
+                                    <h2 class="font-weight-bold display-3 text-success mb-0">{{$added}}</h2>
                                         <h3 class="mt-0 text-uppercase text-muted">Ditambahkan</h3>
                                     </div>
                                     <div class="col-lg-3 col-12 d-flex flex-column justify-content-center align-items-center">
                                         <h2><i class="fas fa-print fa-5x text-warning"></i></h2>
-                                        <h2 class="font-weight-bold display-3 text-warning mb-0">30</h2>
+                                    <h2 class="font-weight-bold display-3 text-warning mb-0">{{$printed}}</h2>
                                         <h3 class="mt-0 text-uppercase text-muted">Dicetak</h3>
                                     </div>
                                 </div>
@@ -55,22 +55,26 @@
                         </div>
                         <div class="col-12">
                             <div class="card-body container">
-                                <div class="card log-card">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-md-7 col-12 d-flex align-items-center">
-                                                <h2>Admin mengubah tampilan dashboard</h2>
-                                            </div>
-                                            <div class="col-md-5 col-12 d-flex align-items-center justify-content-end">
-                                                <div>
-                                                    <a href="" class="btn btn-secondary log-btn">
-                                                        <i class="fas fa-times text-danger"></i>
-                                                    </a>
+                                @forelse ($logs as $log)
+                                    <div class="card log-card mt-3">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-7 col-12 d-flex align-items-center">
+                                                <h2>{{$log->message}}</h2>
+                                                </div>
+                                                <div class="col-md-5 col-12 d-flex align-items-center justify-content-end">
+                                                    <div>
+                                                        <a href="" class="btn btn-secondary log-btn">
+                                                            <i class="fas fa-times text-danger"></i>
+                                                        </a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                @empty
+                                    <h3 class="text-center font-weight-bold text-uppercase text-muted">Catatan kegiatan tidak tersedia...</h3>
+                                @endforelse
                             </div>
                         </div>
                     </div>
