@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Mail;
+use App\Log;
 
 class LogsController extends Controller
 {
@@ -14,8 +14,8 @@ class LogsController extends Controller
      */
     public function index()
     {
-        $mails = Mail::all();
-        return view('logs.index', ['mails' => $mails]);
+        $logs = Log::all();
+        return view('logs.index', ['logs' => $logs]);
     }
 
     /**
