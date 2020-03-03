@@ -1,9 +1,7 @@
 @extends('layouts.app', ['title' => __('User Management')])
-
 @section('content')
     @include('layouts.headers.cards')
-
-    <div class="container-fluid mt--7">
+    <div class="container">
         <div class="row">
             <div class="col">
                 <div class="card shadow">
@@ -17,7 +15,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="col-12">
                         @if (session('status'))
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -28,11 +26,11 @@
                             </div>
                         @endif
                     </div>
-
-                    <div class="table-responsive">
-                        <table class="table align-items-center table-flush">
+                    <div class="table-responsive container py-4">
+                        <table class="table align-items-center table-flush datatable">
                             <thead class="thead-light">
                                 <tr>
+                                    <th scope="col">{{ __('No.') }}</th>
                                     <th scope="col">{{ __('Name') }}</th>
                                     <th scope="col">{{ __('Email') }}</th>
                                     <th scope="col">{{ __('Creation Date') }}</th>
@@ -42,6 +40,7 @@
                             <tbody>
                                 @foreach ($users as $user)
                                     <tr>
+                                        <td>{{ $loop->iteration }}</td>
                                         <td>{{ $user->name }}</td>
                                         <td>
                                             <a href="mailto:{{ $user->email }}">{{ $user->email }}</a>
@@ -57,12 +56,12 @@
                                                         <form action="{{ route('user.destroy', $user) }}" method="post">
                                                             @csrf
                                                             @method('delete')
-                                                            
+
                                                             <a class="dropdown-item" href="{{ route('user.edit', $user) }}">{{ __('Edit') }}</a>
                                                             <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this user?") }}') ? this.parentElement.submit() : ''">
                                                                 {{ __('Delete') }}
                                                             </button>
-                                                        </form>    
+                                                        </form>
                                                     @else
                                                         <a class="dropdown-item" href="{{ route('profile.edit') }}">{{ __('Edit') }}</a>
                                                     @endif
@@ -82,7 +81,7 @@
                 </div>
             </div>
         </div>
-            
+
         @include('layouts.footers.auth')
     </div>
 @endsection
