@@ -46,8 +46,8 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $m->no_surat}}</td>
                                         <td>{{ $m->perihal}}</td>
-                                        <td>{{ $m->doc}}</td>
-                                        <td>{{ $m->pdf}}</td>
+                                        <td>{{ $m->doc.".docx"}}</td>
+                                        <td>{{ $m->pdf.".pdf"}}</td>
                                         <td>{{ date("F d, Y", strtotime($m->created_at)) }}</td>
                                         <td>{{ date("F d, Y", strtotime($m->updated_at)) }}</td>
                                         <td class="text-right">

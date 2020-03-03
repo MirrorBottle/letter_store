@@ -45,8 +45,13 @@ class MailsController extends Controller
         DB::table('mails')->insert([
             'no_surat' => $request->renumber,
             'perihal' => $request->subject,
-            'file' => $request->file
+            'doc' => $request->docx,
+            'pdf' => $request->pdf,
+            'user_id' => auth()->user()->id,
+            'html' => $request->html
         ]);
+
+
         return redirect()->route('mail.index')->withStatus(__('Mail successfully created.'));
     }
 
@@ -85,7 +90,8 @@ class MailsController extends Controller
         DB::table('mails')->where('id', $request->id->update([
             'no_surat' => $request->renumber,
             'perihal' => $request->subject,
-            'file' => $request->file
+            'doc' => $request->docx,
+            'pdf' => $request->pdf
         ]));
         return redirect('/mail');
     }
