@@ -31,48 +31,25 @@
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col">{{ __('No.') }}</th>
-                                    <th scope="col">{{ __('Reference Number') }}</th>
-                                    <th scope="col">{{ __('Subject') }}</th>
-                                    <th scope="col">{{ __('Docx File') }}</th>
-                                    <th scope="col">{{ __('PDF File') }}</th>
+                                    <th scope="col">{{ __('User') }}</th>
+                                    <th scope="col">{{ __('Message') }}</th>
+                                    <th scope="col">{{ __('Activity') }}</th>
                                     <th scope="col">{{ __('Creation Date') }}</th>
                                     <th scope="col">{{ __('Update Date') }}</th>
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($mails as $m)
+                                @foreach ($logs as $l)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $m->no_surat}}</td>
-                                        <td>{{ $m->perihal}}</td>
-                                        <td>{{ $m->doc.".docx"}}</td>
-                                        <td>{{ $m->pdf.".pdf"}}</td>
-                                        <td>{{ date("F d, Y", strtotime($m->created_at)) }}</td>
-                                        <td>{{ date("F d, Y", strtotime($m->updated_at)) }}</td>
+                                        <td>{{ $l->user_id}}</td>
+                                        <td>{{ $l->message}}</td>
+                                        <td>{{ $l->activity}}</td>
+                                        <td>{{ date("F d, Y", strtotime($l->created_at)) }}</td>
+                                        <td>{{ date("F d, Y", strtotime($l->updated_at)) }}</td>
                                         <td class="text-right">
-                                            <div class="dropdown">
-                                                <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <i class="fas fa-ellipsis-v"></i>
-                                                </a>
-                                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                        <form action="{{ route('mail.destroy', $m->id) }}" method="post">
-                                                            @csrf
-                                                            @method('delete')
-                                                            <button type="button" class="dropdown-item" {{$m->user_id != auth()->id() ? 'disabled' : ''}} onclick="confirm('{{ __("Are you sure you want to delete this mail?") }}') ? this.parentElement.submit() : ''">
-                                                                <i class="ni ni-fat-delete text-danger"></i>
-                                                                {{ __('Delete') }}
-                                                            </button>
-                                                        </form>
-                                                        <a class="dropdown-item" href="{{ route('profile.edit') }}">
-                                                            <i class="ni ni-books text-warning"></i>
-                                                            {{ __('Edit') }}
-                                                        </a>
-                                                        <button type="button" class="dropdown-item" data-toggle="modal" data-target="#downloadModal" {{$m->user_id != auth()->id() ? 'disabled' : ''}}>
-                                                            <i class="ni ni-cloud-download-95 text-success"></i>
-                                                            {{ __('Download') }}
-                                                        </button>
-                                                    </div>
+
                                                 </div>
                                             </div>
                                         </td>
