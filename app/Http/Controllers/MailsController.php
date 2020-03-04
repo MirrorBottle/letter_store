@@ -46,36 +46,33 @@ class MailsController extends Controller
         ]);
         if ($request->hasFile('pdf') || $request->hasFile('docx')) {
             $mail = new Mail();
-            if ($request->file('pdf')) {
-                $file = $request->file('pdf');
-                $pdf_name = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '_' . time() . '.' . $file->getClientOriginalExtension();
-                $request->file('pdf')->storeAs('public/pdf', $pdf_name);
-                return redirect()->route('mail.index')->with('error', 'Surat tidak berhasil ditambahkan!');
-            } else {
-                $file = $request->file('docx');
-                $word_file = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '_' . time() . '.' . $file->getClientOriginalExtension();
-                $pdf_file = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '_' . time() . '.' . 'pdf';
-                $html_file = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '_' . time() . '.' . 'html';
-                $request->file('docx')->storeAs('public/word', $word_file);
+            $file = $request->file('docx');
+            $word_file = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '_' . time() . '.' . $file->getClientOriginalExtension();
+            $pdf_file = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '_' . time() . '.' . 'pdf';
+            $html_file = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '_' . time() . '.' . 'html';
+            $request->file('docx')->storeAs('public/word', $word_file);
 
-                // Convert word to PDF
-                \PhpOffice\PhpWord\Settings::setPdfRendererPath(base_path() . '/vendor/dompdf/dompdf');
-                \PhpOffice\PhpWord\Settings::setPdfRendererName('DomPDF');
-                $phpWord = \PhpOffice\PhpWord\IOFactory::load(public_path() . "/storage/word/" . $word_file, 'Word2007');
-                $pdfWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'PDF');
-                $pdfWriter->save(public_path() . "/storage/pdf/" . $pdf_file);
+            // Convert word to PDF
+            \PhpOffice\PhpWord\Settings::setPdfRendererPath(base_path() . '/vendor/dompdf/dompdf');
+            \PhpOffice\PhpWord\Settings::setPdfRendererName('DomPDF');
+            $phpWord = \PhpOffice\PhpWord\IOFactory::load(public_path() . "/storage/word/" . $word_file, 'Word2007');
+            $pdfWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'PDF');
+            $pdfWriter->save(public_path() . "/storage/pdf/" . $pdf_file);
+            // Convert word to HTML
+            $phpHTML = \PhpOffice\PhpWord\IOFactory::load(public_path() . "/storage/word/" . $word_file, 'Word2007');
+            $HTMLWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpHTML, 'HTML');
+            $HTMLWriter->save(public_path() . "/storage/html/" . $html_file);
 
 
-                // Convert word to HTML
-                $phpHTML = \PhpOffice\PhpWord\IOFactory::load(public_path() . "/storage/word/" . $word_file, 'Word2007');
-                $HTMLWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpHTML, 'HTML');
-                $HTMLWriter->save(public_path() . "/storage/html/" . $html_file);
-                return redirect()->route('mail.index')->with('error', 'Surat tidak berhasil ditambahkan!');
-            }
             $mail->no_surat = $request->renumber;
             $mail->user_id = auth()->user()->id;
-            $mail->perihal = $request->perihal;
+            $mail->perihal = $request->subject;
+            $mail->doc = $word_file;
+            $mail->html = $html_file;
+            $mail->pdf = $pdf_file;
+            $this->dispatchLog(auth()->user()->name . ' Menambahkan Surat', 'tambah');
             $mail->save();
+            return redirect()->route('mail.index')->with('error', 'Surat tidak berhasil ditambahkan!');
         } else {
             return redirect()->route('mail.index')->with('error', 'Surat tidak berhasil ditambahkan!');
         }
@@ -98,10 +95,10 @@ class MailsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Mail $mails)
+    public function edit($id)
     {
-        $mails = DB::table("mails")->where('ID', $mails)->get();
-        return view('mails.edit', compact('mails'));
+        $mail = Mail::find($id);
+        return view('mails.edit', compact('mail'));
     }
 
     /**

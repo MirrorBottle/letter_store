@@ -34,13 +34,13 @@
                                         </span>
                                     @endif
                                 </div>
-                                <div class="form-group{{ $errors->has('perihal') ? ' has-danger' : '' }}">
+                                <div class="form-group{{ $errors->has('subject') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-subject">{{ __('Subject') }}</label>
-                                    <input type="text" name="subject" id="input-subject" class="form-control form-control-alternative{{ $errors->has('perihal') ? ' is-invalid' : '' }}" placeholder="{{ __('Subject') }}" value="{{ old('perihal') }}" required>
+                                    <input type="text" name="subject" id="input-subject" class="form-control form-control-alternative{{ $errors->has('subject') ? ' is-invalid' : '' }}" placeholder="{{ __('Subject') }}" value="{{ old('subject') }}" required>
 
-                                    @if ($errors->has('perihal'))
+                                    @if ($errors->has('subject'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('perihal') }}</strong>
+                                            <strong>{{ $errors->first('subject') }}</strong>
                                         </span>
                                     @endif
                                 </div>

@@ -43,7 +43,7 @@
                                 @foreach ($logs as $l)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $l->user_id}}</td>
+                                        <td>{{ $l->user->name}}</td>
                                         <td>{{ $l->message}}</td>
                                         <td>{{ $l->activity}}</td>
                                         <td>{{ date("F d, Y", strtotime($l->created_at)) }}</td>

@@ -25,17 +25,17 @@
                                     <div class="col-lg-3 col-12 d-flex flex-column justify-content-center align-items-center">
                                         <h2><i class="fas fa-eraser fa-5x text-danger"></i></h2>
                                     <h2 class="font-weight-bold display-3 text-danger mb-0">{{$deleted}}</h2>
-                                        <h3 class="mt-0 text-uppercase text-muted">Dihapus</h3>
+                                        <h3 class="mt-0 text-uppercase text-muted">Penghapusan</h3>
                                     </div>
                                     <div class="col-lg-3 col-12 d-flex flex-column justify-content-center align-items-center">
                                         <h2><i class="fas fa-folder-plus fa-5x text-success"></i></h2>
                                     <h2 class="font-weight-bold display-3 text-success mb-0">{{$added}}</h2>
-                                        <h3 class="mt-0 text-uppercase text-muted">Ditambahkan</h3>
+                                        <h3 class="mt-0 text-uppercase text-muted">Penambahan</h3>
                                     </div>
                                     <div class="col-lg-3 col-12 d-flex flex-column justify-content-center align-items-center">
                                         <h2><i class="fas fa-print fa-5x text-warning"></i></h2>
                                     <h2 class="font-weight-bold display-3 text-warning mb-0">{{$printed}}</h2>
-                                        <h3 class="mt-0 text-uppercase text-muted">Dicetak</h3>
+                                        <h3 class="mt-0 text-uppercase text-muted">Pencetakan</h3>
                                     </div>
                                 </div>
                             </div>
@@ -64,8 +64,8 @@
                                                 </div>
                                                 <div class="col-md-5 col-12 d-flex align-items-center justify-content-end">
                                                     <div>
-                                                        <a href="" class="btn btn-secondary log-btn">
-                                                            <i class="fas fa-times text-danger"></i>
+                                                    <a href="" class="btn btn-secondary log-btn" data-toggle="tooltip" data-html="true" title="{{$log->created_at}}">
+                                                            <i class="fas fa-eye text-primary text-center"></i>
                                                         </a>
                                                     </div>
                                                 </div>

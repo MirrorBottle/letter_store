@@ -20,7 +20,7 @@
                         @include('layouts.alert')
                     </div>
                     <div class="table-responsive container py-4">
-                        <table class="table align-items-center table-flush datatable">
+                        <table class="table align-items-center table-flush datatable w-100">
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col">{{ __('No.') }}</th>
@@ -29,7 +29,6 @@
                                     <th scope="col">{{ __('Docx File') }}</th>
                                     <th scope="col">{{ __('PDF File') }}</th>
                                     <th scope="col">{{ __('Creation Date') }}</th>
-                                    <th scope="col">{{ __('Update Date') }}</th>
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
@@ -39,10 +38,9 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $m->no_surat}}</td>
                                         <td>{{ $m->perihal}}</td>
-                                        <td>{{ $m->doc.".docx"}}</td>
-                                        <td>{{ $m->pdf.".pdf"}}</td>
+                                        <td>{{ $m->doc}}</td>
+                                        <td>{{ $m->pdf}}</td>
                                         <td>{{ date("F d, Y", strtotime($m->created_at)) }}</td>
-                                        <td>{{ date("F d, Y", strtotime($m->updated_at)) }}</td>
                                         <td class="text-right">
                                             <div class="dropdown">
                                                 <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -57,7 +55,7 @@
                                                                 {{ __('Delete') }}
                                                             </button>
                                                         </form>
-                                                        <a class="dropdown-item" href="{{ route('profile.edit') }}">
+                                                        <a class="dropdown-item" href="{{ url("mails/edit/$m->id") }}">
                                                             <i class="ni ni-books text-warning"></i>
                                                             {{ __('Edit') }}
                                                         </a>
@@ -80,3 +78,34 @@
     </div>
     @include('mails.modal')
 @endsection
+@push('css')
+    <style>
+        .table-responsive {
+            padding-right: 30px;
+        }
+    div.dataTables_wrapper div.dataTables_length label {
+        margin-top: 9px;
+    }
+    table {
+        overflow: hidden;
+        width: 30%!important;
+    }
+    table tbody tr td {
+        width: 100px!important;
+    }
+    table tbody  tr {
+        width: 100%;
+    }
+    div.dataTables_wrapper div.dataTables_paginate {
+        margin-top: 1rem;
+    }
+    div.dataTables_wrapper div.dataTables_info {
+        padding-top: 1.5em;
+        font-size: .9rem;
+    }
+    .table th, .table td {
+        white-space: normal;
+        line-height: 1.2;
+    }
+    </style>
+@endpush
