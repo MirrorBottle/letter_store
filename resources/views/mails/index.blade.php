@@ -26,8 +26,7 @@
                                     <th scope="col">{{ __('No.') }}</th>
                                     <th scope="col">{{ __('Reference Number') }}</th>
                                     <th scope="col">{{ __('Subject') }}</th>
-                                    <th scope="col">{{ __('Docx File') }}</th>
-                                    <th scope="col">{{ __('PDF File') }}</th>
+                                    <th scope="col">{{ __('Doc File') }}</th>
                                     <th scope="col">{{ __('Creation Date') }}</th>
                                     <th scope="col"></th>
                                 </tr>
@@ -39,33 +38,28 @@
                                         <td>{{ $m->no_surat}}</td>
                                         <td>{{ $m->perihal}}</td>
                                         <td>{{ $m->doc}}</td>
-                                        <td>{{ $m->pdf}}</td>
                                         <td>{{ date("F d, Y", strtotime($m->created_at)) }}</td>
-                                        <td class="text-right">
-                                            <div class="dropdown">
-                                                <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <i class="fas fa-ellipsis-v"></i>
-                                                </a>
-                                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                        <form action="{{ route('mail.destroy', $m->id) }}" method="post">
-                                                            @csrf
-                                                            @method('delete')
-                                                            <button type="button" class="dropdown-item" {{$m->user_id != auth()->id() ? 'disabled' : ''}} onclick="confirm('{{ __("Are you sure you want to delete this mail?") }}') ? this.parentElement.submit() : ''">
-                                                                <i class="ni ni-fat-delete text-danger"></i>
-                                                                {{ __('Delete') }}
-                                                            </button>
-                                                        </form>
-                                                        <a class="dropdown-item" href="{{ url("mails/edit/$m->id") }}">
-                                                            <i class="ni ni-books text-warning"></i>
-                                                            {{ __('Edit') }}
-                                                        </a>
-                                                        <button type="button" class="dropdown-item" data-toggle="modal" data-target="#downloadModal" {{$m->user_id != auth()->id() ? 'disabled' : ''}}>
-                                                            <i class="ni ni-cloud-download-95 text-success"></i>
-                                                            {{ __('Download') }}
-                                                        </button>
-                                                    </div>
+                                        <td class="text-center">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <a href="" class="btn btn-sm btn-primary mr-1" data-toggle="tooltip" title="Ubah Surat">
+                                                        <i class="fa fa-edit"></i>
+                                                    </a>
+                                                    <button type="button" data-pdf="{{$m->pdf}}" data-word="{{$m->doc}}" class="btn btn-sm btn-success btn-delete btn-download" data-toggle="modal" data-target="#downloadModal">
+                                                        <i class="fa fa-download"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="col-12 mt-2">
+                                                    <button type="button" data-file="{{$m->pdf}}" class="btn btn-sm btn-warning btn-delete btn-print" data-toggle="tooltip" title="Cetak Surat">
+                                                        <i class="fa fa-print"></i>
+                                                    </button>
+                                                    <a href="#" class="btn btn-sm btn-danger btn-delete" data-toggle="tooltip" title="Hapus Surat">
+                                                        <i class="fa fa-trash"></i>
+                                                    </a>
                                                 </div>
                                             </div>
+                                            
+                                            
                                         </td>
                                     </tr>
                                 @endforeach
@@ -86,13 +80,8 @@
     div.dataTables_wrapper div.dataTables_length label {
         margin-top: 9px;
     }
-    table {
-        overflow: hidden;
-        width: 30%!important;
-    }
-    table tbody tr td {
-        width: 100px!important;
-    }
+    
+    
     table tbody  tr {
         width: 100%;
     }
@@ -108,4 +97,18 @@
         line-height: 1.2;
     }
     </style>
+@endpush
+@push('js')
+    <script>
+        $('.btn-print').on('click', function(e) {
+            e.preventDefault();
+            var w = window.open(`{{asset('storage/pdf')}}/${$(this).data('file')}`);
+            w.print();
+        })
+        $('.btn-download').on('click', function(e) {
+            console.log(e);
+            $('#pdf-download').attr('href', `{{asset('storage/pdf')}}/${$(this).data('pdf')}`);
+            $('#docx-download').attr('href', `{{asset('storage/word')}}/${$(this).data('word')}`);
+        })
+    </script>
 @endpush
