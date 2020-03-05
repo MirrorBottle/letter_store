@@ -80,13 +80,14 @@
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('home') }}">
-                        <i class="ni ni-tv-2 text-primary"></i> {{ __('Dashboard') }}
+                        <i class="ni ni-tv-2" style="color: #5e72e4"></i>
+                        <span class="nav-link-text" style="color: #5e72e4;">{{ __('Dashboard') }}</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
-                        <i class="fas fa-mail-bulk" style="color: #f4645f;"></i>
-                        <span class="nav-link-text" style="color: #f4645f;">{{ __('Surat') }}</span>
+                        <i class="fas fa-mail-bulk" style="color: #f5365c;"></i>
+                        <span class="nav-link-text" style="color: #f5365c;">{{ __('Surat') }}</span>
                     </a>
                     <div class="collapse show" id="navbar-examples">
                         <ul class="nav nav-sm flex-column">
@@ -96,7 +97,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('user.index') }}">
+                                <a class="nav-link" href="{{ route('mail.create') }}">
                                     <i class="fas fa-plus text-green"></i> {{ __('Tambah Surat') }}
                                 </a>
                             </li>
@@ -104,8 +105,29 @@
                     </div>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link active" href="#navbar" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                        <i class="fas fa-users" style="color: #2dce89;"></i>
+                        <span class="nav-link-text" style="color: #2dce89;">{{ __('Pengguna') }}</span>
+                    </a>
+                    <div class="collapse show" id="navbar">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('user.index')}}">
+                                    <i class="fas fa-id-card text-yellow"></i> {{ __('Lihat Semua') }}
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('user.create') }}">
+                                    <i class="fas fa-user-plus" style="color: #2C738C"></i> {{ __('Tambah Pengguna') }}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{{ url('log') }}">
-                        <i class="fas fa-file"></i> {{ __('Logs') }}
+                        <i class="fas fa-file" style="color: #fb6340;"></i>
+                        <span class="nav-link-text" style="color: #fb6340;">{{ __('Logs') }}
                     </a>
                 </li>
                 <li class="nav-item">
