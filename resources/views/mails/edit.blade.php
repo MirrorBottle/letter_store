@@ -24,8 +24,8 @@
                             <h6 class="heading-small text-muted mb-4">{{ __('Mail information') }}</h6>
                             <div class="pl-lg-4">
                                 <div class="form-group{{ $errors->has('no_surat') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-renumber">{{ __('Reference Number') }}</label>
-                                    <input type="text" name="renumber" id="input-renumber" class="form-control form-control-alternative{{ $errors->has('no_surat') ? ' is-invalid' : '' }}" placeholder="{{ __('Reference Number') }}" value="{{ old('no_surat', $mail->no_surat) }}" required>
+                                    <label class="form-control-label" for="input-no_surat">{{ __('Reference Number') }}</label>
+                                    <input type="text" name="no_surat" id="input-no_surat" class="form-control form-control-alternative{{ $errors->has('no_surat') ? ' is-invalid' : '' }}" placeholder="{{ __('Reference Number') }}" value="{{ old('no_surat', $mail->no_surat) }}" required>
                                     @if ($errors->has('no_surat'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('no_surat') }}</strong>
@@ -33,12 +33,12 @@
                                     @endif
                                 </div>
                                 <div class="form-group{{ $errors->has('perihal') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-subject">{{ __('Perihal') }}</label>
-                                    <input type="text" name="subject" id="input-subject" class="form-control form-control-alternative{{ $errors->has('subject') ? ' is-invalid' : '' }}" placeholder="{{ __('Perihal') }}" value="{{ old('perihal', $mail->perihal)}}" required>
+                                    <label class="form-control-label" for="input-perihal">{{ __('Perihal') }}</label>
+                                    <input type="text" name="perihal" id="input-perihal" class="form-control form-control-alternative{{ $errors->has('perihal') ? ' is-invalid' : '' }}" placeholder="{{ __('Perihal') }}" value="{{ old('perihal', $mail->perihal)}}" required>
 
-                                    @if ($errors->has('subject'))
+                                    @if ($errors->has('perihal'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('subject') }}</strong>
+                                            <strong>{{ $errors->first('perihal') }}</strong>
                                         </span>
                                     @endif
                                 </div>

@@ -40,6 +40,7 @@ class MailsController extends Controller
      */
     private function convertWordToOthers($html_text, $word_file, $pdf_file, $html_file, $old_word_file, $old_pdf_file, $old_html_file)
     {
+        $html_text = preg_replace('/<p\b[^>]*>(.*?)<\/p>/i', '', $html_text, 1);
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
         $section = $phpWord->addSection();
         \PhpOffice\PhpWord\Shared\Html::addHtml($section, $html_text);
@@ -149,7 +150,10 @@ class MailsController extends Controller
     {
         $mail = Mail::find($id);
         $this->convertWordToOthers($request->surat, $mail->doc, $mail->pdf, $mail->html, $mail->doc, $mail->pdf, $mail->html);
-        return redirect('mails')->with('error', 'Surat tidak berhasil ditambahkan!');
+        $mail->no_surat = $request->no_surat;
+        $mail->perihal = $request->perihal;
+        $mail->save();
+        return redirect('mails')->with('success', "Surat dengan no surat <b>$mail->no_surat</b> berhasil diubah");
     }
 
     /**
