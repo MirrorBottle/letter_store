@@ -39,7 +39,7 @@
                                         <td class="text-center">
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <a href="" class="btn btn-sm btn-primary mr-1" data-toggle="tooltip" title="Ubah Surat">
+                                                <a href="{{url('mails/edit', $m->id)}}" class="btn btn-sm btn-primary mr-1" data-toggle="tooltip" title="Ubah Surat">
                                                         <i class="fa fa-edit"></i>
                                                     </a>
                                                     <button type="button" data-pdf="{{$m->pdf}}" data-word="{{$m->doc}}" class="btn btn-sm btn-success btn-delete btn-download" data-toggle="modal" data-target="#downloadModal">

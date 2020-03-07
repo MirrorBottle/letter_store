@@ -92,12 +92,12 @@
                     <div class="collapse show" id="navbar-examples">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{url('mail')}}">
+                                <a class="nav-link" href="{{url('mails')}}">
                                     <i class="fas fa-inbox text-blue"></i> {{ __('Lihat Semua') }}
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('mail.create') }}">
+                                <a class="nav-link" href="{{ url('mails/create') }}">
                                     <i class="fas fa-plus text-green"></i> {{ __('Tambah Surat') }}
                                 </a>
                             </li>

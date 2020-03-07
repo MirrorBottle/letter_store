@@ -5,10 +5,56 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Mail;
+use Illuminate\Support\Facades\Storage;
+use PDF;
 
 class MailsController extends Controller
 {
 
+    /**
+     * Convert a file from word to PDF and save it.
+     *
+     */
+    private function convertWordToPdf($word_file, $pdf_name)
+    {
+        \PhpOffice\PhpWord\Settings::setPdfRendererPath(base_path() . '/vendor/dompdf/dompdf');
+        \PhpOffice\PhpWord\Settings::setPdfRendererName('DomPDF');
+        $phpWord = \PhpOffice\PhpWord\IOFactory::load(public_path() . "/storage/word/" . $word_file, 'Word2007');
+        $pdfWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'PDF');
+        $pdfWriter->save(public_path() . "/storage/pdf/" . $pdf_name);
+    }
+    /**
+     * Convert a file from word to HTML and save it.
+     *
+     */
+    private function convertWordToHtml($word_file, $html_name)
+    {
+        $phpHTML = \PhpOffice\PhpWord\IOFactory::load(public_path() . "/storage/word/" . $word_file, 'Word2007');
+        $HTMLWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpHTML, 'HTML');
+        $HTMLWriter->save(public_path() . "/storage/html/" . $html_name);
+    }
+
+    /**
+     * Convert HTML text to Word and then delete a certain word file that replaced by old one.
+     *
+     */
+    private function convertWordToOthers($html_text, $word_file, $pdf_file, $html_file, $old_word_file, $old_pdf_file, $old_html_file)
+    {
+        $phpWord = new \PhpOffice\PhpWord\PhpWord();
+        $section = $phpWord->addSection();
+        \PhpOffice\PhpWord\Shared\Html::addHtml($section, $html_text);
+        $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+        Storage::delete('public/word/' . $old_word_file);
+        $objWriter->save(public_path() . "/storage/word/" . $word_file);
+        Storage::delete('public/pdf/' . $old_pdf_file);
+        $this->convertWordToPdf($word_file, $pdf_file);
+        Storage::delete('public/pdf/' . $old_html_file);
+        $this->convertWordToHtml($word_file, $html_file);
+    }
+    /**
+     * Convert HTML text to PDF and then delete a certain word file that replaced by old one.
+     *
+     */
     /**
      * Display a listing of the resource.
      *
@@ -39,7 +85,7 @@ class MailsController extends Controller
      */
     public function store(Request $request)
     {
-        // 
+        // Validator
         $request->validate([
             'pdf' => 'mimes:pdf|max:4096',
             'docx' => 'mimes:doc,docx,zip|max:4096'
@@ -51,19 +97,10 @@ class MailsController extends Controller
             $pdf_file = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '_' . time() . '.' . 'pdf';
             $html_file = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '_' . time() . '.' . 'html';
             $request->file('docx')->storeAs('public/word', $word_file);
-
             // Convert word to PDF
-            \PhpOffice\PhpWord\Settings::setPdfRendererPath(base_path() . '/vendor/dompdf/dompdf');
-            \PhpOffice\PhpWord\Settings::setPdfRendererName('DomPDF');
-            $phpWord = \PhpOffice\PhpWord\IOFactory::load(public_path() . "/storage/word/" . $word_file, 'Word2007');
-            $pdfWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'PDF');
-            $pdfWriter->save(public_path() . "/storage/pdf/" . $pdf_file);
+            $this->convertWordToPdf($word_file, $pdf_file);
             // Convert word to HTML
-            $phpHTML = \PhpOffice\PhpWord\IOFactory::load(public_path() . "/storage/word/" . $word_file, 'Word2007');
-            $HTMLWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpHTML, 'HTML');
-            $HTMLWriter->save(public_path() . "/storage/html/" . $html_file);
-
-
+            $this->convertWordToHtml($word_file, $html_file);
             $mail->no_surat = $request->renumber;
             $mail->user_id = auth()->user()->id;
             $mail->perihal = $request->subject;
@@ -72,9 +109,9 @@ class MailsController extends Controller
             $mail->pdf = $pdf_file;
             $this->dispatchLog(auth()->user()->name . ' Menambahkan Surat', 'tambah');
             $mail->save();
-            return redirect()->route('mail.index')->with('error', 'Surat tidak berhasil ditambahkan!');
+            return redirect('mails')->with('error', 'Surat tidak berhasil ditambahkan!');
         } else {
-            return redirect()->route('mail.index')->with('error', 'Surat tidak berhasil ditambahkan!');
+            return redirect('mails')->with('error', 'Surat tidak berhasil ditambahkan!');
         }
     }
 
@@ -108,15 +145,11 @@ class MailsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $mails)
+    public function update(Request $request, $id)
     {
-        DB::table('mails')->where('id', $request->id->update([
-            'no_surat' => $request->renumber,
-            'perihal' => $request->subject,
-            'doc' => $request->docx,
-            'pdf' => $request->pdf
-        ]));
-        return redirect('/mail');
+        $mail = Mail::find($id);
+        $this->convertWordToOthers($request->surat, $mail->doc, $mail->pdf, $mail->html, $mail->doc, $mail->pdf, $mail->html);
+        return redirect('mails')->with('error', 'Surat tidak berhasil ditambahkan!');
     }
 
     /**

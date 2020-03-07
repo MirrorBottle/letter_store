@@ -43,7 +43,7 @@
         <script src="{{ asset('argon') }}/js/argon.js?v=1.0.0"></script>
         <script src="{{asset('datatables/jquery.dataTables.min.js')}}"></script>
         <script src="{{asset('datatables/dataTables.bootstrap4.min.js')}}"></script>
-        <script src="{{asset('js/ckeditor.js')}}"></script>
+        <script src="{{asset('ckeditor/ckeditor.js')}}"></script>
         <script>
             $(document).ready(function() {
                 $('.datatable').DataTable({
@@ -53,18 +53,7 @@
                         url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Indonesian.json"
                     },
                 });
-                ClassicEditor
-                .create( document.querySelector( '#editor' ),{
-                    image: {
-                        toolbar: [ 'imageTextAlternative' ]
-                    }
-                } )
-                .then( editor => {
-                    console.log( editor );
-                } )
-                .catch( error => {
-                    console.error( error );
-                } );
+                
             });
         
         </script>
