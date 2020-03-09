@@ -50,13 +50,13 @@
                                                     <button type="button" data-file="{{$m->pdf}}" class="btn btn-sm btn-warning btn-delete btn-print" data-toggle="tooltip" title="Cetak Surat">
                                                         <i class="fa fa-print"></i>
                                                     </button>
-                                                    <a href="#" class="btn btn-sm btn-danger btn-delete" data-toggle="tooltip" title="Hapus Surat">
+                                                <a href="{{route('mails.destroy', $m)}}" class="btn btn-sm btn-danger btn-delete" data-toggle="tooltip" title="Hapus Surat">
                                                         <i class="fa fa-trash"></i>
                                                     </a>
                                                 </div>
                                             </div>
-                                            
-                                            
+
+
                                         </td>
                                     </tr>
                                 @endforeach
@@ -77,8 +77,8 @@
     div.dataTables_wrapper div.dataTables_length label {
         margin-top: 9px;
     }
-    
-    
+
+
     table tbody  tr {
         width: 100%;
     }

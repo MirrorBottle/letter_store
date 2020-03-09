@@ -14,12 +14,12 @@
                                 <h3 class="mb-0">{{ __('Mail Management') }}</h3>
                             </div>
                             <div class="col-4 text-right">
-                                <a href="{{ route('mail.index') }}" class="btn btn-sm btn-primary">{{ __('Back to list') }}</a>
+                                <a href="{{ url('mails') }}" class="btn btn-sm btn-primary">{{ __('Back to list') }}</a>
                             </div>
                         </div>
                     </div>
                     <div class="card-body">
-                        <form method="post" enctype="multipart/form-data" action="{{ route('mail.store') }}" autocomplete="off">
+                        <form method="post" enctype="multipart/form-data" action="{{ url('mails/store') }}" autocomplete="off">
                             @csrf
 
                             <h6 class="heading-small text-muted mb-4">{{ __('Mail information') }}</h6>
@@ -128,7 +128,7 @@
     <script>
         $(function() {
             $('.file-input').on('change', function(e) {
-                $(this).attr('name') == 'docx' ? $(".file-input[name='pdf']").prop('disabled', 'true') : $(".file-input[name='docx']").prop('disabled', 'true') 
+                $(this).attr('name') == 'docx' ? $(".file-input[name='pdf']").prop('disabled', 'true') : $(".file-input[name='docx']").prop('disabled', 'true')
             })
         })
     </script>

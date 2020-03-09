@@ -110,7 +110,7 @@ class MailsController extends Controller
             $mail->pdf = $pdf_file;
             $this->dispatchLog(auth()->user()->name . ' Menambahkan Surat', 'tambah');
             $mail->save();
-            return redirect('mails')->with('error', 'Surat tidak berhasil ditambahkan!');
+            return redirect('mails')->with('success', 'Surat berhasil ditambahkan!');
         } else {
             return redirect('mails')->with('error', 'Surat tidak berhasil ditambahkan!');
         }
@@ -162,9 +162,9 @@ class MailsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($mails)
     {
-        DB::table('mails')->where('id', $id)->delete();
-        return redirect()->route('mail.index')->withStatus(__('Mail successfully deleted.'));
+        DB::table('mails')->where('id', $mails)->delete();
+        return redirect()->route('mails.index')->withStatus(__('Mail successfully deleted.'));
     }
 }

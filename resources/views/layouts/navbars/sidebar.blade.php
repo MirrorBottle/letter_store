@@ -89,7 +89,7 @@
                         <i class="fas fa-mail-bulk" style="color: #f5365c;"></i>
                         <span class="nav-link-text" style="color: #f5365c;">{{ __('Surat') }}</span>
                     </a>
-                    <div class="collapse show" id="navbar-examples">
+                    <div class="collapse" id="navbar-examples">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
                                 <a class="nav-link" href="{{url('mails')}}">
@@ -109,7 +109,7 @@
                         <i class="fas fa-users" style="color: #2dce89;"></i>
                         <span class="nav-link-text" style="color: #2dce89;">{{ __('Pengguna') }}</span>
                     </a>
-                    <div class="collapse show" id="navbar">
+                    <div class="collapse" id="navbar">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('user.index')}}">
