@@ -109,11 +109,7 @@ class MailsController extends Controller
             $mail->pdf = $pdf_file;
             $this->dispatchLog(auth()->user()->name . ' Menambahkan Surat', 'tambah');
             $mail->save();
-<<<<<<< HEAD
             return redirect('mails')->with('success', 'Surat berhasil ditambahkan!');
-=======
-            return redirect('mails')->with('success', 'Surat berhaasil ditambahkan!');
->>>>>>> 383a530ab473162fdab5e76531b0bd2d8b91b1d5
         } else {
             return redirect('mails')->with('error', 'Surat tidak berhasil ditambahkan!');
         }
@@ -168,6 +164,6 @@ class MailsController extends Controller
     public function destroy($mails)
     {
         DB::table('mails')->where('id', $mails)->delete();
-        return redirect()->route('mails.index')->withStatus(__('Mail successfully deleted.'));
+        return redirect('mails')->with('success', "Surat berhasil dihapus!");
     }
 }

@@ -42,7 +42,7 @@
                                                 <a href="{{url('mails/edit', $m->id)}}" class="btn btn-sm btn-primary mr-1" data-toggle="tooltip" title="Ubah Surat">
                                                         <i class="fa fa-edit"></i>
                                                     </a>
-                                                    <button type="button" data-pdf="{{$m->pdf}}" data-word="{{$m->doc}}" class="btn btn-sm btn-success btn-delete btn-download" data-toggle="modal" data-target="#downloadModal">
+                                                    <button type="button" data-pdf="{{$m->pdf}}" data-word="{{$m->doc}}" class="btn btn-sm btn-success btn-delete btn-download" data-toggle="modal" data-target="#downloadModal" title="Unduh Surat">
                                                         <i class="fa fa-download"></i>
                                                     </button>
                                                 </div>
@@ -50,7 +50,7 @@
                                                     <button type="button" data-file="{{$m->pdf}}" class="btn btn-sm btn-warning btn-delete btn-print" data-toggle="tooltip" title="Cetak Surat">
                                                         <i class="fa fa-print"></i>
                                                     </button>
-                                                <a href="{{route('mails.destroy', $m)}}" class="btn btn-sm btn-danger btn-delete" data-toggle="tooltip" title="Hapus Surat">
+                                                <a href="{{route('mails.destroy', $m)}}" class="btn btn-sm btn-danger btn-delete" data-toggle="tooltip" title="Hapus Surat" onclick="confirm('{{ __("Are you sure you want to delete this mail?") }}') ? this.parentElement.submit() : ''">
                                                         <i class="fa fa-trash"></i>
                                                     </a>
                                                 </div>
