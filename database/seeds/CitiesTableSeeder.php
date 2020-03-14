@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class CitiesTableSeeder extends Seeder
 {
@@ -17,6 +18,7 @@ class CitiesTableSeeder extends Seeder
         foreach ($cities as $city) {
             $data[] = [
                 'name' => $city,
+                'slug' => Str::slug($city),
                 'created_at' => now(),
                 'updated_at' => now()
             ];

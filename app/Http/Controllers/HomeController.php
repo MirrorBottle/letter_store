@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Log;
 use App\Mail;
+use App\MailType;
+use App\City;
 
 class HomeController extends Controller
 {
@@ -12,10 +14,6 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
     /**
      * Show the application dashboard.
@@ -28,7 +26,9 @@ class HomeController extends Controller
         $deleted = count(Log::where('activity', 'hapus')->get());
         $added = count(Log::where('activity', 'tambah')->get());
         $printed = count(Log::where('activity', 'cetak')->get());
+        $mail_types = count(MailType::all());
+        $cities = count(City::all());
         $logs = Log::latest()->take(4)->get();
-        return view('dashboard', compact('mails', 'deleted', 'added', 'printed', 'logs'));
+        return view('dashboard', compact('mails', 'deleted', 'added', 'printed', 'logs', 'mail_types', 'cities'));
     }
 }

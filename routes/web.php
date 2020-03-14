@@ -19,7 +19,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/', 'HomeController@index')->name('home');
     Route::resource('user', 'UserController', ['except' => ['show']]);
     Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);
-    Route::get('/mails', ['as' => 'mails.index', 'uses' => 'MailsController@index']);
+    Route::get('/mails/{slug}', ['as' => 'mails.index', 'uses' => 'MailsController@index']);
     Route::get('/mails/create', 'MailsController@create');
     Route::get('/mails/edit/{id}', 'MailsController@edit');
     Route::get('/mails/destroy/{id}', ['as' => 'mails.destroy', 'uses' => 'MailsController@destroy']);

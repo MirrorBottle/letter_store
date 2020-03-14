@@ -19,6 +19,8 @@
         <link type="text/css" href="{{ asset('argon') }}/css/argon.css?v=1.0.0" rel="stylesheet">
         {{-- Data Tables --}}
         <link rel="stylesheet" href="{{asset('datatables/dataTables.bootstrap4.min.css')}}">
+        {{-- Custom CSS --}}
+        <link rel="stylesheet" href="{{asset('css/custom.css')}}">
         @stack('css')
     </head>
     <body class="{{ $class ?? '' }}">
