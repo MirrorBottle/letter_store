@@ -39,21 +39,8 @@ class CityController extends Controller
         $city->name = $request->name;
         $city->slug = Str::slug($request->name);
         $city->save();
-        $cities = $this->getCities();
-        return view('city.index', compact('cities'))->with('success', 'Kabupaten/Kota berhasil ditambahkan!');
+        return redirect('city')->with('success', 'Kabupaten/Kota berhasil ditambah!');
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -74,7 +61,11 @@ class CityController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $city = City::find($id);
+        $city->name = $request->name;
+        $city->slug = Str::slug($request->name);
+        $city->save();
+        return redirect('city')->with('success', 'Kabupaten/Kota berhasil diubah!');
     }
 
     /**
@@ -85,6 +76,8 @@ class CityController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $city = City::findOrFail($id);
+        $city->delete();
+        return back()->with('success', 'Berhasil menghapus data kabupaten/kota');
     }
 }

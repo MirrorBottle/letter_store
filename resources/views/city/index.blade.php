@@ -12,7 +12,7 @@
                             </div>
                             <div class="col-4 d-flex justify-content-end">
                                 <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#addCity">
-                                    <i class="fas fa-plus"></i>&nbsp;Add Mail
+                                    <i class="fas fa-plus"></i>&nbsp;Add New City
                                 </button>
                             </div>
                         </div>
@@ -26,9 +26,9 @@
                                 @csrf
                                 @method('PUT')
                                 <div class="input-group mb-3">
-                                    <input type="text" name="name" class="form-control" aria-label="Recipient's username" aria-describedby="button-addon2">
+                                    <input type="text" id="edit-name" disabled name="name" class="form-control" aria-label="Recipient's username" aria-describedby="button-addon2">
                                     <div class="input-group-append">
-                                        <button class="btn btn-success" type="submit" id="edit-submit">
+                                        <button class="btn btn-success" disabled type="submit" id="edit-submit">
                                             <i class="fas fa-edit"></i>&nbsp;Edit
                                         </button>
                                     </div>
@@ -54,12 +54,12 @@
                                             <td class="text-center">
                                                 <div class="row">
                                                     <div class="col-12">
-                                                        <a href="" class="btn btn-sm btn-success mr-1" data-toggle="tooltip" title="Ubah Surat">
+                                                        <button type="button" data-name="{{$city->name}}" data-id="{{$city->id}}" class="btn btn-sm btn-success mr-1 edit-city-btn" data-toggle="tooltip" title="Edit City">
                                                             <i class="fa fa-edit"></i>
-                                                        </a>
-                                                        <a href="" class="btn btn-sm btn-danger btn-delete" data-toggle="tooltip" title="Hapus Surat" onclick="confirm('{{ __("Are you sure you want to delete this mail?") }}') ? this.parentElement.submit() : ''">
+                                                        </button>
+                                                        <button type="button" data-id="{{$city->id}}" class="btn btn-sm btn-danger btn-delete" data-toggle="tooltip" title="Delete City">
                                                             <i class="fa fa-trash"></i>
-                                                        </a>
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </td>
@@ -73,6 +73,11 @@
             </div>
         </div>
     </div>
+    {{-- hidden form delete --}}
+    <form action="" id="form-delete" data-url="{{ url('city') }}" method="POST">
+        @csrf
+        @method('DELETE')
+    </form>
     @include('city.modal')
 @endsection
 @push('css')
@@ -101,4 +106,25 @@
     }
     </style>
 @endpush
-
+@push('js')
+    <script>
+        $(function() {
+            $('.edit-city-btn').on('click', function() {
+                $('#edit-name').removeAttr('disabled');
+                $('#edit-name').val($(this).data('name'));
+                $('#edit-submit').removeAttr('disabled');
+                $('#edit-form').attr('action', `city/${$(this).data('id')}`)
+            })
+            $('.btn-delete').on('click', function(e) {
+                const message = "Yakin ingin menghapus data gedung?"
+                const confirmAlert = confirm(message);
+                if (confirmAlert == true) {
+                    const id = $(this).data('id');
+                    const $form = $('#form-delete');
+                    $form.attr('action', $form.attr('data-url') +'/'+ id);
+                    $form.submit();
+                }
+            })
+        })
+    </script>
+@endpush
