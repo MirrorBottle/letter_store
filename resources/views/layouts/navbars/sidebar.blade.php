@@ -141,6 +141,18 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ url('city') }}">
+                        <i class="fas fa-city text-info"></i>
+                        <span class="nav-link-text text-info">{{ __('Kabupaten/Kota') }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('type') }}">
+                        <i class="fas fa-stream text-default"></i>
+                        <span class="nav-link-text text-default">{{ __('Tipe Surat') }}
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('home') }}">
                         <i class="fas fa-user-circle text-primary"></i> {{ __('Profile') }}
                     </a>

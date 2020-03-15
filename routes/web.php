@@ -30,4 +30,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/mails/store', 'MailsController@store');
     Route::post('/mails/update', 'MailsController@update');
     Route::resource('log', 'LogsController');
+    Route::resource('city', 'CityController', ['except' => ['show', 'create']]);
 });
