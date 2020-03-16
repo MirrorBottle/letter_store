@@ -91,16 +91,26 @@
                     </a>
                     <div class="collapse" id="navbar-examples">
                         <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{url('mails')}}">
-                                    <i class="fas fa-inbox text-blue"></i> {{ __('Lihat Semua') }}
+                            @foreach ($sidebar_cities as $city)
+                                <a class="nav-link active" href="#{{'city-'.$loop->iteration}}" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="{{$city->name}}">
+                                    <i class="fas fa-circle-notch text-default"></i>
+                                    <span class="nav-link-text text-default">{{ $city->name }}</span>
                                 </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ url('mails/create') }}">
-                                    <i class="fas fa-plus text-green"></i> {{ __('Tambah Surat') }}
-                                </a>
-                            </li>
+                                <div class="collapse" id="{{'city-'.$loop->iteration}}">
+                                    <ul class="nav nav-sm flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{url('mails', $city->slug)}}">
+                                                <i class="fas fa-inbox text-blue"></i> {{ __('Lihat Semua') }}
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{ url('mails/create') }}">
+                                                <i class="fas fa-plus text-green"></i> {{ __('Tambah Surat') }}
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            @endforeach
                         </ul>
                     </div>
                 </li>
@@ -128,6 +138,18 @@
                     <a class="nav-link" href="{{ url('log') }}">
                         <i class="fas fa-file" style="color: #fb6340;"></i>
                         <span class="nav-link-text" style="color: #fb6340;">{{ __('Logs') }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('city') }}">
+                        <i class="fas fa-city text-info"></i>
+                        <span class="nav-link-text text-info">{{ __('Kabupaten/Kota') }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('type') }}">
+                        <i class="fas fa-stream text-default"></i>
+                        <span class="nav-link-text text-default">{{ __('Tipe Surat') }}
                     </a>
                 </li>
                 <li class="nav-item">

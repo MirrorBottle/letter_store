@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Mail;
+use App\City;
+use App\MailType;
 use Illuminate\Support\Facades\Storage;
 use PDF;
 
@@ -60,10 +62,19 @@ class MailsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($slug)
     {
-        $mails = Mail::all();
-        return view('mails.index', ['mails' => $mails]);
+        $datas = [];
+        $mails = Mail::where('city_id', City::where('slug', $slug)->get()[0]->id)->get();
+        $types = MailType::all();
+        foreach ($types as $type) {
+            $datas[$type->name]["type"] = $type->name;
+            $datas[$type->name]["mails"] = Mail::where([
+                'city_id' => City::where('slug', $slug)->get()[0]->id,
+                'type_id' => $type->id
+            ])->get();
+        }
+        return view('mails.index', compact('mails', 'types', 'datas'));
     }
 
     /**

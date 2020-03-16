@@ -17,25 +17,35 @@
                         <div class="col-12">
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-lg-3 col-12 d-flex flex-column justify-content-center align-items-center">
+                                    <div class="col-lg-2 col-12 d-flex flex-column justify-content-center align-items-center">
                                         <h2><i class="fas fa-mail-bulk fa-5x text-primary"></i></h2>
                                     <h2 class="font-weight-bold display-3 text-primary mb-0">{{$mails}}</h2>
                                         <h3 class="mt-0 text-uppercase text-muted">Tersedia</h3>
                                     </div>
-                                    <div class="col-lg-3 col-12 d-flex flex-column justify-content-center align-items-center">
+                                    <div class="col-lg-2 col-12 d-flex flex-column justify-content-center align-items-center">
                                         <h2><i class="fas fa-eraser fa-5x text-danger"></i></h2>
                                     <h2 class="font-weight-bold display-3 text-danger mb-0">{{$deleted}}</h2>
                                         <h3 class="mt-0 text-uppercase text-muted">Penghapusan</h3>
                                     </div>
-                                    <div class="col-lg-3 col-12 d-flex flex-column justify-content-center align-items-center">
+                                    <div class="col-lg-2 col-12 d-flex flex-column justify-content-center align-items-center">
                                         <h2><i class="fas fa-folder-plus fa-5x text-success"></i></h2>
                                     <h2 class="font-weight-bold display-3 text-success mb-0">{{$added}}</h2>
                                         <h3 class="mt-0 text-uppercase text-muted">Penambahan</h3>
                                     </div>
-                                    <div class="col-lg-3 col-12 d-flex flex-column justify-content-center align-items-center">
+                                    <div class="col-lg-2 col-12 d-flex flex-column justify-content-center align-items-center">
                                         <h2><i class="fas fa-print fa-5x text-warning"></i></h2>
                                     <h2 class="font-weight-bold display-3 text-warning mb-0">{{$printed}}</h2>
                                         <h3 class="mt-0 text-uppercase text-muted">Pencetakan</h3>
+                                    </div>
+                                    <div class="col-lg-2 col-12 d-flex flex-column justify-content-center align-items-center">
+                                        <h2><i class="fas fa-city fa-5x text-info"></i></h2>
+                                    <h2 class="font-weight-bold display-3 text-info mb-0">{{$cities}}</h2>
+                                        <h3 class="mt-0 text-uppercase text-muted">Kota</h3>
+                                    </div>
+                                    <div class="col-lg-2 col-12 d-flex flex-column justify-content-center align-items-center">
+                                        <h2><i class="fas fa-stream fa-5x text-default"></i></h2>
+                                    <h2 class="font-weight-bold display-3 text-default mb-0">{{$mail_types}}</h2>
+                                        <h3 class="mt-0 text-uppercase text-muted">Tipe surat</h3>
                                     </div>
                                 </div>
                             </div>
