@@ -28,7 +28,7 @@
             </form>
             @include('layouts.navbars.sidebar')
         @endauth
-        
+
         <div class="main-content">
             @include('layouts.navbars.navbar')
             @yield('content')
@@ -53,13 +53,13 @@
                         url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Indonesian.json"
                     },
                 });
-                
+
             });
-        
+
         </script>
         @stack('js')
-        
+
         <!-- Argon JS -->
-        
+
     </body>
 </html>
