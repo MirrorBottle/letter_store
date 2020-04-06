@@ -1,6 +1,6 @@
-@extends('layouts.app', ['title' => __('Mails')])
+@extends('layouts.app', ['title' => __('Types')])
 @section('content')
-    @include('layouts.headers.cards', ['message' => 'Surat'])
+    @include('layouts.headers.cards', ['message' => 'Types'])
     <div class="container py-4">
         <div class="row">
             <div class="col">
@@ -8,7 +8,12 @@
                     <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
-                                <h3 class="mb-0">{{ __('Mails') }}</h3>
+                                <h3 class="mb-0">{{ __('Types') }}</h3>
+                            </div>
+                            <div class="col-4 d-flex justify-content-end">
+                                <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#addType">
+                                    <i class="fas fa-plus"></i>&nbsp;Add New Type
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -16,43 +21,45 @@
                         <div class="col-12">
                             @include('layouts.alert')
                         </div>
+                        <div class="col-12">
+                            <form action="" method="POST" id="edit-form">
+                                @csrf
+                                @method('PUT')
+                                <div class="input-group mb-3">
+                                    <input type="text" id="edit-name" disabled name="name" class="form-control" aria-label="Recipient's username" aria-describedby="button-addon2">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-success" disabled type="submit" id="edit-submit">
+                                            <i class="fas fa-edit"></i>&nbsp;Edit
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                         <div class="table-responsive container mt-4">
                             <table class="table align-items-center table-flush datatable w-100">
                                 <thead class="thead-light">
                                     <tr>
                                         <th scope="col">{{ __('No.') }}</th>
-                                        <th scope="col">{{ __('Reference Number') }}</th>
-                                        <th scope="col">{{ __('Subject') }}</th>
-                                        <th scope="col">{{ __('Doc File') }}</th>
-                                        <th scope="col">{{ __('Creation Date') }}</th>
+                                        <th scope="col">{{ __('Name') }}</th>
+                                        <th scope="col" class="text-center">{{ __('Mails Total') }}</th>
                                         <th scope="col"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($data['mails'] as $mail)
+                                    @foreach ($types as $type)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $mail->no_surat}}</td>
-                                            <td>{{ $mail->perihal}}</td>
-                                            <td>{{ $mail->doc}}</td>
-                                            <td>{{ date("F d, Y", strtotime($mail->created_at)) }}</td>
+                                            <td>{{ $type->name}}</td>
+                                            <td class="text-center">{{ $type->total_mails.' Mails'}}</td>
                                             <td class="text-center">
                                                 <div class="row">
                                                     <div class="col-12">
-                                                    <a href="{{url('mails/edit', $mail->id)}}" class="btn btn-sm btn-primary mr-1" data-toggle="tooltip" title="Ubah Surat">
+                                                        <button type="button" data-name="{{$type->name}}" data-id="{{$type->id}}" class="btn btn-sm btn-success mr-1 edit-city-btn" data-toggle="tooltip" title="Edit Type">
                                                             <i class="fa fa-edit"></i>
-                                                        </a>
-                                                        <button type="button" data-pdf="{{$mail->pdf}}" data-word="{{$mail->doc}}" class="btn btn-sm btn-success btn-delete btn-download" data-toggle="modal" data-target="#downloadModal" title="Unduh Surat">
-                                                            <i class="fa fa-download"></i>
                                                         </button>
-                                                    </div>
-                                                    <div class="col-12 mt-2">
-                                                        <button type="button" data-file="{{$mail->pdf}}" class="btn btn-sm btn-warning btn-delete btn-print" data-toggle="tooltip" title="Cetak Surat">
-                                                            <i class="fa fa-print"></i>
-                                                        </button>
-                                                    <a href="{{route('mails.destroy', $mail)}}" class="btn btn-sm btn-danger btn-delete" data-toggle="tooltip" title="Hapus Surat" onclick="confirm('{{ __("Are you sure you want to delete this mail?") }}') ? this.parentElement.submit() : ''">
+                                                        <button type="button" data-id="{{$type->id}}" class="btn btn-sm btn-danger btn-delete" data-toggle="tooltip" title="Delete Type">
                                                             <i class="fa fa-trash"></i>
-                                                        </a>
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </td>
@@ -61,14 +68,17 @@
                                 </tbody>
                             </table>
                         </div>
-                            
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    @include('mails.modal')
+    {{-- hidden form delete --}}
+    <form action="" id="form-delete" data-url="{{ url('type') }}" method="POST">
+        @csrf
+        @method('DELETE')
+    </form>
+    @include('mail_type.modal')
 @endsection
 @push('css')
     <style>
@@ -96,4 +106,25 @@
     }
     </style>
 @endpush
-
+@push('js')
+    <script>
+        $(function() {
+            $('.edit-city-btn').on('click', function() {
+                $('#edit-name').removeAttr('disabled');
+                $('#edit-name').val($(this).data('name'));
+                $('#edit-submit').removeAttr('disabled');
+                $('#edit-form').attr('action', `type/${$(this).data('id')}`)
+            })
+            $('.btn-delete').on('click', function(e) {
+                const message = "Yakin ingin menghapus data gedung?"
+                const confirmAlert = confirm(message);
+                if (confirmAlert == true) {
+                    const id = $(this).data('id');
+                    const $form = $('#form-delete');
+                    $form.attr('action', $form.attr('data-url') +'/'+ id);
+                    $form.submit();
+                }
+            })
+        })
+    </script>
+@endpush

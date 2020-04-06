@@ -23,6 +23,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/mails/create', 'MailsController@create');
     Route::get('/mails/edit/{id}', 'MailsController@edit');
     Route::get('/mails/destroy/{id}', ['as' => 'mails.destroy', 'uses' => 'MailsController@destroy']);
+    Route::get('type', ['as' => 'mail_type.index', 'uses' => 'MailTypeController@index']);
     Route::put('/mails/{id}', 'MailsController@update');
     Route::put('profile', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
     Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
@@ -31,4 +32,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/mails/update', 'MailsController@update');
     Route::resource('log', 'LogsController');
     Route::resource('city', 'CityController', ['except' => ['show', 'create']]);
+    Route::resource('type', 'MailTypeController', ['except' => ['show', 'create']]);
 });
